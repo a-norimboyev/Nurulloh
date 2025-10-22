@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="uz">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Frontend Dasturchi</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="profile-img">
+        <img
+          src="./images/IMG_20251017_105836_396.jpg"
+          alt="Nurulloh Qurbonaliyev"
+        />
+      </div>
+      <h1 class="name">Nurulloh Qurbonaliyev</h1>
+      <div class="title">
+        <i class="fas fa-laptop-code"></i>
+        <span class="title-text">Frontend Dasturchi</span>
+      </div>
+      <div class="special-buttons">
+        <button class="theme-btn" onclick="toggleTheme()">
+          <i class="fas fa-moon"></i>
+          <span class="theme-text">Tema</span>
+        </button>
+        <button class="language-btn active" onclick="changeLanguage('uz')">
+          UZ
+        </button>
+        <button class="language-btn" onclick="changeLanguage('ru')">RU</button>
+        <button class="language-btn" onclick="changeLanguage('en')">EN</button>
+      </div>
+      <div class="social-links">
+        <button class="social-btn portfolio" onclick="showPortfolioAlert()">
+          <i class="fas fa-briefcase social-icon"></i>
+          <span class="portfolio-text">Portfolio</span>
+        </button>
+        <a href="https://t.me/Nurulloh_023" class="social-btn telegram">
+          <i class="fab fa-telegram social-icon"></i>
+          <span class="telegram-text">Telegram</span>
+        </a>
+        <a
+          href="https://www.instagram.com/nurulloh_23_?igsh=aWhnNGtvM3kyazZi"
+          class="social-btn instagram"
+        >
+          <i class="fab fa-instagram social-icon"></i>
+          <span class="instagram-text">Instagram</span>
+        </a>
+        <a
+          href="https://www.facebook.com/criminal0717"
+          class="social-btn facebook"
+        >
+          <i class="fab fa-facebook social-icon"></i>
+          <span class="facebook-text">Facebook</span>
+        </a>
+        <a href="https://x.com/Nurulloh023" class="social-btn twitter">
+          <i class="fab fa-twitter social-icon"></i>
+          <span class="twitter-text">Twitter</span>
+        </a>
+      </div>
+      <div class="contact-info">
+        <div class="contact-item">
+          <i class="fas fa-envelope"></i>
+          <span class="email-text">nurulloh1023@gmail.com</span>
+        </div>
+        <div class="contact-item">
+          <i class="fas fa-phone"></i>
+          <span class="phone-text">+998 91 740 74 67</span>
+        </div>
+        <div class="contact-item">
+          <i class="fas fa-map-marker-alt"></i>
+          <span class="location-text">Oʻzbekiston</span>
+        </div>
+      </div>
+    </div>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
