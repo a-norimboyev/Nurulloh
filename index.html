@@ -3,14 +3,24 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Frontend Dasturchi</title>
+    <title>Suniy Intellekt Dasturchisi</title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
-    <link rel="stylesheet" href="./style.css" />
+    <!-- CSS fayllar -->
+    <link rel="stylesheet" href="./css/base.css" />
+    <link rel="stylesheet" href="./css/components.css" />
+    <link rel="stylesheet" href="./css/sections.css" />
+    <link rel="stylesheet" href="./css/modal.css" />
+    <link rel="stylesheet" href="./css/animations.css" />
+    <link rel="stylesheet" href="./css/dark-theme.css" />
+    <link rel="stylesheet" href="./css/responsive.css" />
   </head>
   <body>
+    <!-- AI Particle Background -->
+    <canvas id="particles"></canvas>
+
     <div class="container">
       <div class="profile-img">
         <img
@@ -20,8 +30,28 @@
       </div>
       <h1 class="name">Nurulloh Qurbonaliyev</h1>
       <div class="title">
-        <i class="fas fa-laptop-code"></i>
-        <span class="title-text">Frontend Dasturchi</span>
+        <i class="fas fa-robot"></i>
+        <span class="title-text">Suniy Intellekt Dasturchisi</span>
+        <span class="typing-cursor">|</span>
+      </div>
+
+      <!-- Men haqimda -->
+      <div class="accordion animate-item">
+        <div class="accordion-header active" onclick="toggleAccordion(this)">
+          <h2 class="section-title">
+            <i class="fas fa-user"></i>
+            <span class="about-title-text">Men haqimda</span>
+          </h2>
+          <i class="fas fa-chevron-down accordion-arrow"></i>
+        </div>
+        <div class="accordion-content open">
+          <p class="about-text">
+            Salom! Men Nurulloh — suniy intellekt dasturchisi. Machine Learning,
+            Deep Learning va AI texnologiyalari bilan ishlashga qiziqaman.
+            Python, TensorFlow, PyTorch va NLP sohasida tajribaga egaman.
+            Kelajak texnologiyalarini yaratishga tayyor!
+          </p>
+        </div>
       </div>
       <div class="special-buttons">
         <button class="theme-btn" onclick="toggleTheme()">
@@ -34,11 +64,19 @@
         <button class="language-btn" onclick="changeLanguage('ru')">RU</button>
         <button class="language-btn" onclick="changeLanguage('en')">EN</button>
       </div>
-      <div class="social-links">
+      <div class="social-links animate-item">
         <button class="social-btn portfolio" onclick="showPortfolioAlert()">
           <i class="fas fa-briefcase social-icon"></i>
           <span class="portfolio-text">Portfolio</span>
         </button>
+        <a href="https://github.com/a-norimboyev" class="social-btn github" target="_blank">
+          <i class="fab fa-github social-icon"></i>
+          <span class="github-text">GitHub</span>
+        </a>
+        <a href="https://linkedin.com/in/nurulloh" class="social-btn linkedin" target="_blank">
+          <i class="fab fa-linkedin social-icon"></i>
+          <span class="linkedin-text">LinkedIn</span>
+        </a>
         <a href="https://t.me/Nurulloh_023" class="social-btn telegram">
           <i class="fab fa-telegram social-icon"></i>
           <span class="telegram-text">Telegram</span>
@@ -62,7 +100,134 @@
           <span class="twitter-text">Twitter</span>
         </a>
       </div>
-      <div class="contact-info">
+
+      <!-- Loyihalar -->
+      <div class="accordion scroll-animate">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <h2 class="section-title">
+            <i class="fas fa-project-diagram"></i>
+            <span class="projects-title-text">Loyihalarim</span>
+          </h2>
+          <i class="fas fa-chevron-down accordion-arrow"></i>
+        </div>
+        <div class="accordion-content">
+          <div class="projects-grid">
+          <div class="project-card">
+            <div class="project-icon"><i class="fas fa-robot"></i></div>
+            <h3 class="project-name">AI Chatbot</h3>
+            <p class="project-desc project-desc-1">NLP asosida ishlaydigan aqlli chatbot. Foydalanuvchi savollariga javob beradi.</p>
+            <div class="project-tags">
+              <span class="tag">Python</span>
+              <span class="tag">NLP</span>
+              <span class="tag">Flask</span>
+            </div>
+          </div>
+          <div class="project-card">
+            <div class="project-icon"><i class="fas fa-image"></i></div>
+            <h3 class="project-name">Rasm Aniqlash</h3>
+            <p class="project-desc project-desc-2">Computer Vision yordamida rasmlarni tahlil qilish va tanib olish tizimi.</p>
+            <div class="project-tags">
+              <span class="tag">TensorFlow</span>
+              <span class="tag">CNN</span>
+              <span class="tag">OpenCV</span>
+            </div>
+          </div>
+          <div class="project-card">
+            <div class="project-icon"><i class="fas fa-chart-line"></i></div>
+            <h3 class="project-name">Narx Bashorati</h3>
+            <p class="project-desc project-desc-3">Machine Learning yordamida mahsulot narxlarini bashorat qilish modeli.</p>
+            <div class="project-tags">
+              <span class="tag">Scikit-learn</span>
+              <span class="tag">Pandas</span>
+              <span class="tag">ML</span>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sertifikatlar -->
+      <div class="accordion scroll-animate">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <h2 class="section-title">
+            <i class="fas fa-certificate"></i>
+            <span class="certs-title-text">Sertifikatlar</span>
+          </h2>
+          <i class="fas fa-chevron-down accordion-arrow"></i>
+        </div>
+        <div class="accordion-content">
+        <div class="certs-list">
+          <div class="cert-item">
+            <i class="fas fa-award"></i>
+            <div class="cert-info">
+              <h4 class="cert-name">Machine Learning Specialization</h4>
+              <p class="cert-org">Coursera - Stanford University</p>
+            </div>
+          </div>
+          <div class="cert-item">
+            <i class="fas fa-award"></i>
+            <div class="cert-info">
+              <h4 class="cert-name">Deep Learning Nanodegree</h4>
+              <p class="cert-org">Udacity</p>
+            </div>
+          </div>
+          <div class="cert-item">
+            <i class="fas fa-award"></i>
+            <div class="cert-info">
+              <h4 class="cert-name">Python for Data Science</h4>
+              <p class="cert-org">IBM - Coursera</p>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+
+      <!-- Ko'nikmalar -->
+      <div class="accordion animate-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <h2 class="section-title">
+            <i class="fas fa-code"></i>
+            <span class="skills-title-text">Ko'nikmalar</span>
+          </h2>
+          <i class="fas fa-chevron-down accordion-arrow"></i>
+        </div>
+        <div class="accordion-content">
+          <div class="skills-grid">
+          <div class="skill-item">
+            <i class="fab fa-python"></i>
+            <span>Python</span>
+            <div class="skill-bar"><div class="skill-fill" style="width: 92%"></div></div>
+          </div>
+          <div class="skill-item">
+            <i class="fas fa-brain"></i>
+            <span>TensorFlow</span>
+            <div class="skill-bar"><div class="skill-fill" style="width: 85%"></div></div>
+          </div>
+          <div class="skill-item">
+            <i class="fas fa-fire"></i>
+            <span>PyTorch</span>
+            <div class="skill-bar"><div class="skill-fill" style="width: 80%"></div></div>
+          </div>
+          <div class="skill-item">
+            <i class="fas fa-comments"></i>
+            <span>NLP</span>
+            <div class="skill-bar"><div class="skill-fill" style="width: 78%"></div></div>
+          </div>
+          <div class="skill-item">
+            <i class="fas fa-eye"></i>
+            <span>Computer Vision</span>
+            <div class="skill-bar"><div class="skill-fill" style="width: 75%"></div></div>
+          </div>
+          <div class="skill-item">
+            <i class="fas fa-database"></i>
+            <span>Data Science</span>
+            <div class="skill-bar"><div class="skill-fill" style="width: 82%"></div></div>
+          </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-info animate-item">
         <div class="contact-item">
           <i class="fas fa-envelope"></i>
           <span class="email-text">nurulloh1023@gmail.com</span>
@@ -75,6 +240,41 @@
           <i class="fas fa-map-marker-alt"></i>
           <span class="location-text">Oʻzbekiston</span>
         </div>
+        <button class="contact-form-btn" onclick="openContactModal()">
+          <i class="fas fa-envelope-open"></i>
+          <span class="contact-btn-text">Xabar yuborish</span>
+        </button>
+      </div>
+
+      <!-- Footer -->
+      <div class="footer">
+        <p class="footer-text">© 2026 Nurulloh Qurbonaliyev. Barcha huquqlar himoyalangan.</p>
+      </div>
+    </div>
+
+    <!-- Aloqa formasi modal -->
+    <div class="contact-modal" id="contactModal">
+      <div class="modal-content">
+        <button class="modal-close" onclick="closeContactModal()">×</button>
+        <h2 class="modal-title">
+          <i class="fas fa-paper-plane"></i>
+          <span class="contact-form-title">Xabar yuborish</span>
+        </h2>
+        <form id="contactForm" onsubmit="submitContactForm(event)">
+          <div class="form-group">
+            <input type="text" id="formName" class="form-input" placeholder="Ismingiz" required />
+          </div>
+          <div class="form-group">
+            <input type="email" id="formEmail" class="form-input" placeholder="Email" required />
+          </div>
+          <div class="form-group">
+            <textarea id="formMessage" class="form-input form-textarea" placeholder="Xabaringiz" required></textarea>
+          </div>
+          <button type="submit" class="form-submit">
+            <i class="fas fa-paper-plane"></i>
+            <span class="form-submit-text">Yuborish</span>
+          </button>
+        </form>
       </div>
     </div>
 
