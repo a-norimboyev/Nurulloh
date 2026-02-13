@@ -40,6 +40,67 @@
   from { width: 0; }
 }
 
+@keyframes loaderSpin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes loaderFadeOut {
+  to { opacity: 0; visibility: hidden; }
+}
+
+@keyframes revealText {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+    filter: blur(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+/* ===== LOADING EKRANI ===== */
+.loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #0a0e17;
+  z-index: 99999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+.loader.hidden {
+  animation: loaderFadeOut 0.6s ease forwards;
+}
+
+.loader-content {
+  text-align: center;
+}
+
+.loader-spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid rgba(0, 210, 255, 0.2);
+  border-top-color: #00d2ff;
+  border-radius: 50%;
+  animation: loaderSpin 0.8s linear infinite;
+  margin: 0 auto 15px;
+}
+
+.loader-text {
+  color: #00d2ff;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 2px;
+}
+
 /* ===== ELEMENT ANIMATSIYALARI ===== */
 .container {
   animation: fadeIn 0.8s ease-out;
@@ -95,3 +156,66 @@
   opacity: 1;
   transform: translateY(0);
 }
+
+/* ===== YUQORIGA QAYTISH TUGMASI ===== */
+.scroll-top-btn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(45deg, #00d2ff, #3a7bd5);
+  color: white;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 210, 255, 0.4);
+}
+
+.scroll-top-btn.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.scroll-top-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 210, 255, 0.6);
+}
+
+/* ===== PROFIL RASM 3D EFFEKT ===== */
+.profile-img {
+  perspective: 800px;
+  transition: transform 0.5s ease;
+}
+
+.profile-img:hover {
+  animation: none;
+  transform: rotateY(15deg) rotateX(-5deg) scale(1.1);
+  box-shadow: 0 15px 40px rgba(0, 210, 255, 0.5);
+}
+
+.profile-img img {
+  transition: transform 0.5s ease;
+}
+
+.profile-img:hover img {
+  transform: scale(1.05);
+}
+
+/* ===== MATN REVEAL ANIMATSIYA ===== */
+.reveal-text {
+  animation: revealText 0.8s ease both;
+}
+
+.reveal-text:nth-child(1) { animation-delay: 0.1s; }
+.reveal-text:nth-child(2) { animation-delay: 0.2s; }
+.reveal-text:nth-child(3) { animation-delay: 0.3s; }
+.reveal-text:nth-child(4) { animation-delay: 0.4s; }
+.reveal-text:nth-child(5) { animation-delay: 0.5s; }

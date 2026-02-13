@@ -18,7 +18,9 @@
 
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background: #0a0e17;
+  background: linear-gradient(-45deg, #0a0e17, #1a1a4e, #0d2137, #0a2a1a, #1a0a2e, #0a0e17);
+  background-size: 400% 400%;
+  animation: gradientMove 15s ease infinite;
   min-height: 100vh;
   display: flex;
   justify-content: center;
@@ -27,8 +29,16 @@ body {
   color: #e0e0e0;
 }
 
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  25% { background-position: 100% 0%; }
+  50% { background-position: 100% 50%; }
+  75% { background-position: 0% 100%; }
+  100% { background-position: 0% 50%; }
+}
+
 .container {
-  background: rgba(15, 20, 35, 0.85);
+  background: rgba(15, 20, 35, 0.6);
   border-radius: 0;
   box-shadow: none;
   padding: 50px 80px;
@@ -37,7 +47,7 @@ body {
   min-height: 100vh;
   text-align: center;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   z-index: 1;
 }
 

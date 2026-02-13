@@ -7,7 +7,7 @@ const userData = {
     instagram: "https://www.instagram.com/nurulloh_23_?igsh=aWhnNGtvM3kyazZi",
     facebook: "https://www.facebook.com/criminal0717",
     twitter: "https://x.com/Nurulloh023",
-    github: "https://github.com/a-norimboyev",
+    github: "https://github.com/nurulloh1023",
     linkedin: "https://linkedin.com/in/nurulloh",
   },
 };
@@ -239,14 +239,14 @@ window.addEventListener("resize", resizeCanvas);
 
 const stars = [];
 const shootingStars = [];
-const starCount = 150;
+const starCount = 200;
 
 // Oddiy yulduzlar (miltillovchi)
 class Star {
   constructor() {
     this.x = Math.random() * canvas.width;
     this.y = Math.random() * canvas.height;
-    this.radius = Math.random() * 2 + 0.5;
+    this.radius = Math.random() * 4 + 1.5;
     this.opacity = Math.random() * 0.8 + 0.2;
     this.twinkleSpeed = Math.random() * 0.03 + 0.005;
     this.twinkleDir = 1;
@@ -263,12 +263,24 @@ class Star {
   }
 
   draw() {
-    // Yulduz shaklida chizish
+    // Yulduz shaklida chizish (5 burchakli yulduzcha)
     ctx.save();
+    ctx.translate(this.x, this.y);
     ctx.beginPath();
-    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+    const spikes = 5;
+    const outerRadius = this.radius * 2;
+    const innerRadius = this.radius * 0.8;
+    for (let i = 0; i < spikes * 2; i++) {
+      const r = i % 2 === 0 ? outerRadius : innerRadius;
+      const angle = (Math.PI / spikes) * i - Math.PI / 2;
+      const px = Math.cos(angle) * r;
+      const py = Math.sin(angle) * r;
+      if (i === 0) ctx.moveTo(px, py);
+      else ctx.lineTo(px, py);
+    }
+    ctx.closePath();
     ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
-    ctx.shadowBlur = this.radius * 6;
+    ctx.shadowBlur = this.radius * 8;
     ctx.shadowColor = `rgba(200, 220, 255, ${this.opacity})`;
     ctx.fill();
     ctx.restore();
@@ -384,3 +396,166 @@ document.querySelector(".github").href = userData.links.github;
 document.querySelector(".linkedin").href = userData.links.linkedin;
 
 updateLanguage(currentLanguage);
+
+// ===== CURSOR TRAIL EFFEKT =====
+const trailCanvas = document.createElement("canvas");
+trailCanvas.id = "cursor-trail";
+trailCanvas.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;z-index:9999;pointer-events:none;";
+document.body.appendChild(trailCanvas);
+const tCtx = trailCanvas.getContext("2d");
+
+function resizeTrailCanvas() {
+  trailCanvas.width = window.innerWidth;
+  trailCanvas.height = window.innerHeight;
+}
+resizeTrailCanvas();
+window.addEventListener("resize", resizeTrailCanvas);
+
+const trail = [];
+const trailLength = 20;
+
+document.addEventListener("mousemove", (e) => {
+  trail.push({
+    x: e.clientX,
+    y: e.clientY,
+    life: 1,
+    size: Math.random() * 3 + 2,
+    color: `hsl(${190 + Math.random() * 30}, 100%, ${60 + Math.random() * 20}%)`
+  });
+  if (trail.length > trailLength) trail.shift();
+});
+
+function animateTrail() {
+  tCtx.clearRect(0, 0, trailCanvas.width, trailCanvas.height);
+
+  for (let i = trail.length - 1; i >= 0; i--) {
+    const p = trail[i];
+    p.life -= 0.03;
+    if (p.life <= 0) {
+      trail.splice(i, 1);
+      continue;
+    }
+
+    tCtx.save();
+    tCtx.globalAlpha = p.life * 0.8;
+    tCtx.beginPath();
+
+    // Yulduzcha shakl
+    const spikes = 4;
+    const outerR = p.size * p.life;
+    const innerR = outerR * 0.4;
+    for (let j = 0; j < spikes * 2; j++) {
+      const r = j % 2 === 0 ? outerR : innerR;
+      const angle = (Math.PI / spikes) * j - Math.PI / 2;
+      const px = p.x + Math.cos(angle) * r;
+      const py = p.y + Math.sin(angle) * r;
+      if (j === 0) tCtx.moveTo(px, py);
+      else tCtx.lineTo(px, py);
+    }
+    tCtx.closePath();
+    tCtx.fillStyle = p.color;
+    tCtx.shadowBlur = 10;
+    tCtx.shadowColor = "#00d2ff";
+    tCtx.fill();
+    tCtx.restore();
+  }
+
+  requestAnimationFrame(animateTrail);
+}
+animateTrail();
+
+// ===== LOADING EKRANI =====
+window.addEventListener("load", () => {
+  setTimeout(() => {
+    document.getElementById("loader").classList.add("hidden");
+  }, 1200);
+});
+
+// ===== YUQORIGA QAYTISH TUGMASI =====
+const scrollTopBtn = document.getElementById("scrollTopBtn");
+window.addEventListener("scroll", () => {
+  if (window.scrollY > 300) {
+    scrollTopBtn.classList.add("visible");
+  } else {
+    scrollTopBtn.classList.remove("visible");
+  }
+});
+
+// ===== SKILL COUNTER ANIMATSIYA =====
+function animateSkillCounters() {
+  document.querySelectorAll(".skill-fill").forEach((fill) => {
+    const width = parseInt(fill.style.width);
+    const parent = fill.closest(".skill-item");
+    if (!parent) return;
+    let counter = parent.querySelector(".skill-percent");
+    if (!counter) {
+      counter = document.createElement("span");
+      counter.className = "skill-percent";
+      counter.style.cssText = "font-size:11px;color:#00d2ff;font-weight:700;margin-top:2px;";
+      parent.appendChild(counter);
+    }
+    let current = 0;
+    const interval = setInterval(() => {
+      current++;
+      counter.textContent = current + "%";
+      if (current >= width) clearInterval(interval);
+    }, 20);
+  });
+}
+
+// Skill counter ni accordion ochilganda ishga tushirish
+const skillsObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      animateSkillCounters();
+      skillsObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.3 });
+
+document.querySelectorAll(".skills-grid").forEach((grid) => {
+  skillsObserver.observe(grid);
+});
+
+// ===== MATN REVEAL ANIMATSIYA =====
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      const children = entry.target.querySelectorAll(".accordion-header, .about-text, .project-card, .cert-item, .skill-item, .contact-item");
+      children.forEach((child, i) => {
+        child.style.opacity = "0";
+        child.style.transform = "translateY(20px)";
+        child.style.filter = "blur(5px)";
+        child.style.transition = "all 0.6s ease";
+        setTimeout(() => {
+          child.style.opacity = "1";
+          child.style.transform = "translateY(0)";
+          child.style.filter = "blur(0)";
+        }, i * 100);
+      });
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll(".accordion, .contact-info").forEach((el) => {
+  revealObserver.observe(el);
+});
+
+// ===== PARALLAX SCROLL EFFEKT =====
+window.addEventListener("scroll", () => {
+  const scrolled = window.scrollY;
+  const profileImg = document.querySelector(".profile-img");
+  const nameEl = document.querySelector(".name");
+  const titleEl = document.querySelector(".title");
+
+  if (profileImg) {
+    profileImg.style.transform = `translateY(${scrolled * 0.15}px)`;
+  }
+  if (nameEl) {
+    nameEl.style.transform = `translateY(${scrolled * 0.1}px)`;
+  }
+  if (titleEl) {
+    titleEl.style.transform = `translateY(${scrolled * 0.08}px)`;
+  }
+});

@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Suniy Intellekt Dasturchisi</title>
+    <title>Qurbonaliyev Nurulloh - Suniy Intellekt Dasturchisi</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -18,6 +19,14 @@
     <link rel="stylesheet" href="./css/responsive.css" />
   </head>
   <body>
+    <!-- Loading ekrani -->
+    <div class="loader" id="loader">
+      <div class="loader-content">
+        <div class="loader-spinner"></div>
+        <p class="loader-text">Yuklanmoqda...</p>
+      </div>
+    </div>
+
     <!-- AI Particle Background -->
     <canvas id="particles"></canvas>
 
@@ -69,7 +78,7 @@
           <i class="fas fa-briefcase social-icon"></i>
           <span class="portfolio-text">Portfolio</span>
         </button>
-        <a href="https://github.com/a-norimboyev" class="social-btn github" target="_blank">
+        <a href="https://github.com/nurulloh1023" class="social-btn github" target="_blank">
           <i class="fab fa-github social-icon"></i>
           <span class="github-text">GitHub</span>
         </a>
@@ -251,6 +260,11 @@
         <p class="footer-text">© 2026 Nurulloh Qurbonaliyev. Barcha huquqlar himoyalangan.</p>
       </div>
     </div>
+
+    <!-- Yuqoriga qaytish tugmasi -->
+    <button class="scroll-top-btn" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+      <i class="fas fa-arrow-up"></i>
+    </button>
 
     <!-- Aloqa formasi modal -->
     <div class="contact-modal" id="contactModal">
