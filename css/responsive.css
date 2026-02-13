@@ -1,0 +1,97 @@
+/* ===== MOBIL (480px gacha) ===== */
+@media (max-width: 480px) {
+  .container {
+    padding: 30px 20px;
+    min-height: 100vh;
+  }
+
+  .name {
+    font-size: 28px;
+  }
+
+  .title {
+    font-size: 16px;
+  }
+
+  .social-btn {
+    padding: 14px 25px;
+    font-size: 15px;
+  }
+
+  .special-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .theme-btn,
+  .language-btn {
+    width: 100%;
+    max-width: 200px;
+  }
+
+  .skills-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* ===== PLANSHET (768px dan) ===== */
+@media (min-width: 768px) {
+  .container {
+    padding: 60px 120px;
+  }
+
+  .social-links {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .social-btn {
+    flex: 1;
+    min-width: 180px;
+    max-width: 250px;
+  }
+
+  .projects-grid {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .project-card {
+    flex: 1;
+    min-width: 250px;
+  }
+
+  .certs-list {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .cert-item {
+    flex: 1;
+    min-width: 250px;
+  }
+
+  .accordion {
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .contact-info {
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* ===== KATTA EKRANLAR (1200px dan) ===== */
+@media (min-width: 1200px) {
+  .container {
+    padding: 60px 200px;
+  }
+
+  .skills-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

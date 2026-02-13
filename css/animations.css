@@ -1,0 +1,97 @@
+/* ===== KEYFRAMES ===== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes skillFill {
+  from { width: 0; }
+}
+
+/* ===== ELEMENT ANIMATSIYALARI ===== */
+.container {
+  animation: fadeIn 0.8s ease-out;
+}
+
+.profile-img {
+  animation: fadeInUp 0.8s ease-out 0.2s both;
+}
+
+.name {
+  animation: fadeInUp 0.8s ease-out 0.4s both;
+}
+
+.title {
+  animation: fadeInUp 0.8s ease-out 0.6s both;
+}
+
+.animate-item {
+  animation: fadeInUp 0.8s ease-out 0.8s both;
+}
+
+.social-btn {
+  animation: slideInLeft 0.5s ease-out both;
+}
+
+.social-btn:nth-child(1) { animation-delay: 0.9s; }
+.social-btn:nth-child(2) { animation-delay: 1.0s; }
+.social-btn:nth-child(3) { animation-delay: 1.1s; }
+.social-btn:nth-child(4) { animation-delay: 1.2s; }
+.social-btn:nth-child(5) { animation-delay: 1.3s; }
+
+/* ===== SKILL FILL ANIMATSIYA ===== */
+.skill-fill {
+  animation: skillFill 1.5s ease-out 1.2s both;
+}
+
+/* ===== TYPING CURSOR ===== */
+.typing-cursor {
+  animation: blink 0.8s infinite;
+  font-weight: 100;
+  color: #00d2ff;
+  margin-left: 2px;
+}
+
+/* ===== SCROLL ANIMATSIYA ===== */
+.scroll-animate {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.scroll-animate.visible {
+  opacity: 1;
+  transform: translateY(0);
+}

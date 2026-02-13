@@ -1,0 +1,71 @@
+/* ===== DARK TEMA TOGGLE ===== */
+/* Asosiy tema allaqachon qorong'i, bu qo'shimcha o'zgarishlar uchun */
+
+body.dark-theme {
+  background: linear-gradient(135deg, #060a12 0%, #0d1520 100%);
+}
+
+body.dark-theme .container {
+  background: rgba(10, 14, 23, 0.92);
+}
+
+body.dark-theme .theme-btn {
+  border-color: #00d2ff;
+}
+
+body.dark-theme .theme-btn.active {
+  background: #00d2ff;
+  color: #0a0e17;
+}
+
+body.dark-theme .language-btn {
+  border-color: #00d2ff;
+}
+
+body.dark-theme .language-btn.active {
+  background: #00d2ff;
+  color: #0a0e17;
+}
+
+body.dark-theme .accordion {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+body.dark-theme .accordion-header:hover {
+  background: rgba(0, 210, 255, 0.06);
+}
+
+body.dark-theme .skill-item {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+body.dark-theme .skill-bar {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-theme .project-card {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+body.dark-theme .cert-item {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+body.dark-theme .contact-info {
+  background: linear-gradient(45deg, #080d14, #0f1a28);
+}
+
+body.dark-theme .footer {
+  border-top-color: rgba(255, 255, 255, 0.06);
+}
+
+body.dark-theme .modal-content {
+  background: #111a27;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+body.dark-theme .form-input {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.1);
+}
