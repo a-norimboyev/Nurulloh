@@ -33,7 +33,7 @@ const appState = {
 const i18n = {
   uz: {
     liveWeather: 'Jonli Meteorologik Tizim',
-    searchPlaceholder: 'Shahar qidiring... (Toshkent, Samarqand, London...) [ / ]',
+    searchPlaceholder: 'Shahar qidiring... [ / ]',
     myLocation: 'Joylashuvim',
     popular: 'Tanlangan:',
     fetchingData: 'Ob-havo ma\'lumotlari tahlil qilinmoqda...',
@@ -74,7 +74,7 @@ const i18n = {
   },
   ru: {
     liveWeather: 'Живая Метеорологическая Система',
-    searchPlaceholder: 'Поиск города... (Ташкент, Самарканд, Москва...) [ / ]',
+    searchPlaceholder: 'Поиск города... [ / ]',
     myLocation: 'Мое местоположение',
     popular: 'Избранное:',
     fetchingData: 'Анализ данных о погоде...',
@@ -115,7 +115,7 @@ const i18n = {
   },
   en: {
     liveWeather: 'Live Meteorological Platform',
-    searchPlaceholder: 'Search city... (Tashkent, Samarkand, London...) [ / ]',
+    searchPlaceholder: 'Search city... [ / ]',
     myLocation: 'My Location',
     popular: 'Featured:',
     fetchingData: 'Analyzing real-time atmospheric data...',
