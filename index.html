@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ob-Havo Pro — Jonli Ultra Zamonaviy Ob-Havo Xizmati</title>
+  
+  <!-- Modern Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="weather-theme-clear-day">
+  <!-- Dynamic Atmosphere Canvas (Rain, Snow, Stars, Sun Flare, Clouds, Lightning) -->
+  <canvas id="weatherCanvas" class="weather-canvas"></canvas>
+  <div class="ambient-glow"></div>
+
+  <div class="app-layout">
+    
+    <!-- Top Navigation Bar -->
+    <header class="top-nav">
+      <div class="nav-left">
+        <div class="brand-badge">
+          <div class="brand-icon-box">
+            <i data-lucide="cloud-sun" class="brand-svg"></i>
+          </div>
+          <div class="brand-titles">
+            <h1>Ob-Havo<span class="pro-tag">PRO</span></h1>
+            <span class="brand-sub" data-i18n="liveWeather">Jonli Meteorologik Tizim</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Center Search & Location -->
+      <div class="nav-center">
+        <div class="search-container">
+          <div class="search-box-inner">
+            <i data-lucide="search" class="search-icon"></i>
+            <input 
+              type="text" 
+              id="cityInput" 
+              placeholder="Shahar qidiring... (Toshkent, Samarqand, London... / bosish)" 
+              autocomplete="off"
+            />
+            <kbd class="search-shortcut">/</kbd>
+            <button id="clearSearch" class="btn-clear" style="display: none;">
+              <i data-lucide="x"></i>
+            </button>
+          </div>
+          <!-- Live Auto-suggest Dropdown -->
+          <div id="searchSuggestions" class="search-suggestions-panel" style="display: none;"></div>
+        </div>
+      </div>
+
+      <!-- Right Controls: Audio, Lang, Units, GPS, Favorites -->
+      <div class="nav-right">
+        <!-- Ambient Sound Toggle -->
+        <button id="soundToggleBtn" class="control-btn sound-btn" title="Atmosfera tovushlari (Mute/Unmute)">
+          <i data-lucide="volume-x"></i>
+        </button>
+
+        <!-- Language Selector -->
+        <div class="lang-selector">
+          <button id="langBtn" class="control-btn lang-btn" title="Tilni tanlang">
+            <i data-lucide="globe"></i>
+            <span id="currentLangLabel">UZ</span>
+          </button>
+          <div class="lang-menu" id="langMenu" style="display: none;">
+            <div class="lang-option active" data-lang="uz">O'zbekcha (UZ)</div>
+            <div class="lang-option" data-lang="ru">Русский (RU)</div>
+            <div class="lang-option" data-lang="en">English (EN)</div>
+          </div>
+        </div>
+
+        <!-- Celsius / Fahrenheit Switcher -->
+        <div class="unit-segment">
+          <button class="unit-choice active" data-unit="c">°C</button>
+          <button class="unit-choice" data-unit="f">°F</button>
+        </div>
+
+        <!-- Geolocation Button -->
+        <button id="geoLocateBtn" class="btn-primary-glow" title="Mening joylashuvim">
+          <i data-lucide="navigation"></i>
+          <span class="hide-mobile" data-i18n="myLocation">Joylashuvim</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Quick City Ribbon & Saved Favorites -->
+    <section class="quick-ribbon-section">
+      <div class="ribbon-scroll">
+        <div class="saved-badge" id="savedCitiesLabel">
+          <i data-lucide="bookmark"></i>
+          <span data-i18n="popular">Tanlangan:</span>
+        </div>
+        <div class="chips-track" id="cityChipsTrack">
+          <button class="city-pill active" data-lat="41.2646" data-lon="69.2163" data-name="Toshkent" data-country="O'zbekiston">
+            <span class="pill-dot"></span> Toshkent
+          </button>
+          <button class="city-pill" data-lat="39.6542" data-lon="66.9597" data-name="Samarqand" data-country="O'zbekiston">Samarqand</button>
+          <button class="city-pill" data-lat="39.7747" data-lon="64.4286" data-name="Buxoro" data-country="O'zbekiston">Buxoro</button>
+          <button class="city-pill" data-lat="40.7821" data-lon="72.3442" data-name="Andijon" data-country="O'zbekiston">Andijon</button>
+          <button class="city-pill" data-lat="40.9983" data-lon="71.6726" data-name="Namangan" data-country="O'zbekiston">Namangan</button>
+          <button class="city-pill" data-lat="40.3842" data-lon="71.7843" data-name="Farg'ona" data-country="O'zbekiston">Farg'ona</button>
+          <button class="city-pill" data-lat="41.3783" data-lon="60.3639" data-name="Xiva" data-country="O'zbekiston">Xiva</button>
+          <button class="city-pill" data-lat="42.4602" data-lon="59.6166" data-name="Nukus" data-country="O'zbekiston">Nukus</button>
+          <button class="city-pill" data-lat="38.8606" data-lon="65.7891" data-name="Qarshi" data-country="O'zbekiston">Qarshi</button>
+          <button class="city-pill" data-lat="37.2242" data-lon="67.2783" data-name="Termiz" data-country="O'zbekiston">Termiz</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Dynamic Content Wrapper -->
+    <main class="main-dashboard" id="mainDashboard">
+      
+      <!-- Loading Skeleton / Animation -->
+      <div id="loaderBox" class="glass-loader">
+        <div class="orb-pulse"></div>
+        <div class="loader-text">
+          <h3 data-i18n="fetchingData">Ob-havo ma'lumotlari tahlil qilinmoqda...</h3>
+          <p data-i18n="connectingApi">Open-Meteo Sun'iy Yo'ldosh & Radar API ga ulanmoqda</p>
+        </div>
+      </div>
+
+      <!-- Error State View -->
+      <div id="errorBox" class="glass-card error-card" style="display: none;">
+        <div class="error-icon-wrap">
+          <i data-lucide="wifi-off"></i>
+        </div>
+        <h3 id="errorTitle">Ma'lumotlarni yuklab bo'lmadi</h3>
+        <p id="errorDescription">Internet aloqasini tekshiring yoki boshqa shahar qidiring.</p>
+        <button id="retryButton" class="btn-primary-glow">
+          <i data-lucide="rotate-ccw"></i> <span data-i18n="retry">Qayta urinish</span>
+        </button>
+      </div>
+
+      <!-- Real Weather Content Grid -->
+      <div id="weatherGrid" class="weather-grid" style="display: none;">
+        
+        <!-- Left / Primary Column -->
+        <div class="grid-primary-col">
+          
+          <!-- 1. Ultra Hero Current Weather Card -->
+          <div class="glass-card hero-weather-card">
+            <div class="hero-top-row">
+              <div class="location-group">
+                <div class="location-heading">
+                  <h2 id="cityNameDisplay">Toshkent</h2>
+                  <button id="favoriteToggleBtn" class="fav-btn" title="Sevimli shaharlarga qo'shish">
+                    <i data-lucide="heart"></i>
+                  </button>
+                </div>
+                <div class="location-meta">
+                  <span id="countryNameDisplay">O'zbekiston</span>
+                  <span class="dot-separator">•</span>
+                  <span id="geoCoordsDisplay">41.26°N, 69.21°E</span>
+                  <span class="live-pill"><span class="pulsing-green"></span> LIVE</span>
+                </div>
+              </div>
+              
+              <div class="date-group">
+                <span id="localTimeDisplay" class="time-large">--:--</span>
+                <span id="dateDisplay" class="date-text">Bugun, 29-Avgust</span>
+              </div>
+            </div>
+
+            <div class="hero-center-row">
+              <div class="visual-temp-wrap">
+                <div class="hero-weather-icon-box" id="heroIconContainer">
+                  <i data-lucide="sun" class="hero-icon-svg"></i>
+                </div>
+                <div class="hero-temp-digits">
+                  <span id="mainTempDigit" class="temp-val">--</span>
+                  <span class="temp-sym" id="mainTempUnit">°C</span>
+                </div>
+              </div>
+
+              <div class="hero-condition-wrap">
+                <div class="condition-badge" id="conditionBadge">
+                  <span id="weatherSummaryText">Ochiq quyoshli</span>
+                </div>
+                <div class="feels-like-tag">
+                  <i data-lucide="thermometer-sun"></i>
+                  <span id="feelsLikeText">His qilinishi: --°C</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Hero Highlights Footer -->
+            <div class="hero-footer-stats">
+              <div class="hero-stat-box">
+                <div class="stat-icon red-glow"><i data-lucide="arrow-up"></i></div>
+                <div class="stat-content">
+                  <span class="stat-label" data-i18n="maxTemp">Maksimal</span>
+                  <strong class="stat-num" id="heroMaxTemp">--°C</strong>
+                </div>
+              </div>
+
+              <div class="hero-stat-box">
+                <div class="stat-icon blue-glow"><i data-lucide="arrow-down"></i></div>
+                <div class="stat-content">
+                  <span class="stat-label" data-i18n="minTemp">Minimal</span>
+                  <strong class="stat-num" id="heroMinTemp">--°C</strong>
+                </div>
+              </div>
+
+              <div class="hero-stat-box">
+                <div class="stat-icon cyan-glow"><i data-lucide="cloud-rain"></i></div>
+                <div class="stat-content">
+                  <span class="stat-label" data-i18n="rainChance">Yog'in ehtimoli</span>
+                  <strong class="stat-num" id="heroRainChance">0%</strong>
+                </div>
+              </div>
+
+              <div class="hero-stat-box">
+                <div class="stat-icon amber-glow"><i data-lucide="wind"></i></div>
+                <div class="stat-content">
+                  <span class="stat-label" data-i18n="wind">Shamol</span>
+                  <strong class="stat-num" id="heroWindShort">-- km/h</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. Interactive Hourly Forecast with Chart & List View Switcher -->
+          <div class="glass-card hourly-forecast-card">
+            <div class="card-head-row">
+              <div class="head-title">
+                <i data-lucide="clock-9"></i>
+                <h3 data-i18n="hourlyTitle">24 Soatlik Dinamik Prognoz</h3>
+              </div>
+              <div class="view-toggle">
+                <button id="viewTrackBtn" class="toggle-view-btn active" title="Karta ko'rinishi">
+                  <i data-lucide="layout-grid"></i>
+                </button>
+                <button id="viewChartBtn" class="toggle-view-btn" title="Grafik ko'rinishi">
+                  <i data-lucide="trending-up"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Hourly Cards Scroll Track -->
+            <div id="hourlyCardsView" class="hourly-cards-wrapper">
+              <div class="hourly-timeline" id="hourlyTimeline"></div>
+            </div>
+
+            <!-- Hourly Interactive SVG Trend Chart (Toggled) -->
+            <div id="hourlyChartView" class="hourly-chart-wrapper" style="display: none;">
+              <svg id="hourlySvgChart" viewBox="0 0 800 160" preserveAspectRatio="none"></svg>
+              <div id="chartTooltip" class="chart-tooltip" style="display: none;"></div>
+            </div>
+          </div>
+
+          <!-- 3. Key Atmospheric & Environmental Matrix (2x2 / 3x2 Grid) -->
+          <div class="matrix-grid-section">
+            
+            <!-- Wind Compass Radar Widget -->
+            <div class="glass-card mini-card wind-compass-card">
+              <div class="card-mini-head">
+                <i data-lucide="wind"></i>
+                <span data-i18n="windRadar">Shamol Kompasi</span>
+              </div>
+              <div class="compass-body">
+                <div class="compass-dial">
+                  <span class="compass-n">N</span>
+                  <span class="compass-e">E</span>
+                  <span class="compass-s">S</span>
+                  <span class="compass-w">W</span>
+                  <div class="compass-needle" id="compassNeedle">
+                    <div class="needle-arrow"></div>
+                  </div>
+                </div>
+                <div class="compass-info">
+                  <span class="info-speed" id="compassSpeed">14 <small>km/h</small></span>
+                  <span class="info-dir" id="compassDirName">Shimoliy-sharqiy</span>
+                  <span class="info-gusts" id="compassGusts">Shiddat: 18 km/h</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Air Quality Index (AQI) Widget -->
+            <div class="glass-card mini-card aqi-card">
+              <div class="card-mini-head">
+                <i data-lucide="activity"></i>
+                <span data-i18n="airQuality">Havo Sifati (AQI)</span>
+              </div>
+              <div class="aqi-body">
+                <div class="aqi-ring-box">
+                  <div class="aqi-number" id="aqiNumber">38</div>
+                  <span class="aqi-scale">AQI</span>
+                </div>
+                <div class="aqi-details">
+                  <span class="aqi-status-badge good" id="aqiStatusBadge">Toza & Ajoyib</span>
+                  <div class="pollutants-row">
+                    <span>PM2.5: <strong id="aqiPm25">8.4</strong></span>
+                    <span>PM10: <strong id="aqiPm10">14.2</strong></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Sun & Daylight Celestial Arc -->
+            <div class="glass-card mini-card sun-arc-card">
+              <div class="card-mini-head">
+                <i data-lucide="sun-dim"></i>
+                <span data-i18n="sunTracker">Quyosh Vaqtlari</span>
+              </div>
+              <div class="sun-arc-body">
+                <div class="sun-arc-svg-box">
+                  <svg viewBox="0 0 160 80" class="sun-arc-svg">
+                    <path d="M 10 70 A 70 70 0 0 1 150 70" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="3" stroke-dasharray="4 4" />
+                    <path id="sunArcProgress" d="M 10 70 A 70 70 0 0 1 80 10" fill="none" stroke="url(#sunGradient)" stroke-width="4" />
+                    <circle id="sunOrb" cx="80" cy="10" r="7" fill="#fbbf24" filter="drop-shadow(0 0 8px #fbbf24)" />
+                    <defs>
+                      <linearGradient id="sunGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#f97316" />
+                        <stop offset="100%" stop-color="#fbbf24" />
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                </div>
+                <div class="sun-times-row">
+                  <div class="sun-time-item">
+                    <i data-lucide="sunrise" class="sunrise-color"></i>
+                    <div>
+                      <small data-i18n="sunrise">Chiqishi</small>
+                      <strong id="sunriseTime">05:42</strong>
+                    </div>
+                  </div>
+                  <div class="sun-time-item">
+                    <i data-lucide="sunset" class="sunset-color"></i>
+                    <div>
+                      <small data-i18n="sunset">Botishi</small>
+                      <strong id="sunsetTime">19:15</strong>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- UV Index & Comfort Card -->
+            <div class="glass-card mini-card uv-card">
+              <div class="card-mini-head">
+                <i data-lucide="sun-medium"></i>
+                <span data-i18n="uvIndex">UV Indeksi</span>
+              </div>
+              <div class="uv-body">
+                <div class="uv-level-row">
+                  <span class="uv-digit" id="uvValue">5</span>
+                  <span class="uv-level-badge medium" id="uvBadge">O'rtacha</span>
+                </div>
+                <div class="uv-bar-track">
+                  <div class="uv-bar-fill" id="uvBarFill" style="width: 50%;"></div>
+                </div>
+                <p class="uv-advice" id="uvAdvice">Quyosh ko'zoynagi va yengil bosh kiyim kiyish tavsiya etiladi.</p>
+              </div>
+            </div>
+
+            <!-- Humidity & Dew Point Card -->
+            <div class="glass-card mini-card humidity-card">
+              <div class="card-mini-head">
+                <i data-lucide="droplets"></i>
+                <span data-i18n="humidity">Namlik & Shudring</span>
+              </div>
+              <div class="humidity-body">
+                <div class="hum-val-box">
+                  <span class="hum-main" id="humidityVal">46%</span>
+                  <span class="hum-sub" id="humidityStatus">Qulay muhit</span>
+                </div>
+                <div class="hum-extra">
+                  <div class="extra-item">
+                    <span data-i18n="pressure">Bosim:</span>
+                    <strong id="pressureVal">1014 hPa</strong>
+                  </div>
+                  <div class="extra-item">
+                    <span data-i18n="dewPoint">Shudring nuqtasi:</span>
+                    <strong id="dewPointVal">12°C</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Visibility & Cloudiness Card -->
+            <div class="glass-card mini-card visibility-card">
+              <div class="card-mini-head">
+                <i data-lucide="eye"></i>
+                <span data-i18n="visibility">Ko'rinuvchanlik</span>
+              </div>
+              <div class="vis-body">
+                <div class="vis-val-box">
+                  <span class="vis-main" id="visibilityVal">10.0 <small>km</small></span>
+                  <span class="vis-sub" id="visibilityStatus">Juda tiniq ko'rinish</span>
+                </div>
+                <div class="vis-extra">
+                  <div class="extra-item">
+                    <span data-i18n="cloudCover">Bulut qoplami:</span>
+                    <strong id="cloudCoverVal">15%</strong>
+                  </div>
+                  <div class="extra-item">
+                    <span data-i18n="precipitation">Yog'in:</span>
+                    <strong id="precipSumVal">0.0 mm</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Right / 7-10 Day Forecast & Insights Column -->
+        <div class="grid-side-col">
+          
+          <!-- Apple-Style 7-Day Forecast Card with Min-Max Range Bars -->
+          <div class="glass-card weekly-card">
+            <div class="card-head-row">
+              <div class="head-title">
+                <i data-lucide="calendar-days"></i>
+                <h3 data-i18n="weeklyTitle">7 Kunlik Kengaytirilgan Prognoz</h3>
+              </div>
+            </div>
+
+            <div class="weekly-range-list" id="weeklyRangeList">
+              <!-- Dynamically rendered with range bar sliders -->
+            </div>
+          </div>
+
+          <!-- Weather Tips & Intelligent Lifestyle Advice -->
+          <div class="glass-card tips-card">
+            <div class="card-head-row">
+              <div class="head-title">
+                <i data-lucide="sparkles" class="amber-glow-icon"></i>
+                <h3 data-i18n="tipsTitle">Kunlik Maslahatlar</h3>
+              </div>
+            </div>
+            <div class="tips-grid" id="lifestyleTips">
+              <div class="tip-pill" id="tipClothing">
+                <i data-lucide="shirt"></i>
+                <div class="tip-desc">
+                  <strong data-i18n="clothing">Kiyinish</strong>
+                  <span>Yengil qulay kiyim tavsiya etiladi</span>
+                </div>
+              </div>
+              <div class="tip-pill" id="tipOutdoor">
+                <i data-lucide="bike"></i>
+                <div class="tip-desc">
+                  <strong data-i18n="outdoor">Ochiq havo mashg'uloti</strong>
+                  <span>Sayr va sport uchun a'lo vaqt</span>
+                </div>
+              </div>
+              <div class="tip-pill" id="tipCarWash">
+                <i data-lucide="car"></i>
+                <div class="tip-desc">
+                  <strong data-i18n="carWash">Avtomobil yuvish</strong>
+                  <span>Yog'in kutilmayapti, yuvish mumkin</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Radar API Technical Engine Card -->
+          <div class="glass-card tech-card">
+            <div class="tech-header">
+              <div class="tech-dot active"></div>
+              <span>Open-Meteo WMO Enterprise API</span>
+            </div>
+            <p data-i18n="apiDescription">
+              Global ECMWF, GFS va ICON yuqori aniqlikdagi meteorologik modellar asosida 15 daqiqalik intervallar bilan yangilanadi.
+            </p>
+            <div class="tech-tags">
+              <span class="tag-item"><i data-lucide="cpu"></i> ECMWF 0.1°</span>
+              <span class="tag-item"><i data-lucide="shield-check"></i> 100% Bepul</span>
+              <span class="tag-item"><i data-lucide="zap"></i> < 50ms API</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <div class="footer-content">
+        <p>© 2026 Ob-Havo PRO • Yuqori aniqlikdagi jonli ob-havo platformasi</p>
+        <div class="footer-links">
+          <span>O'zbekiston & Global</span>
+          <span>•</span>
+          <span>Open-Meteo Radar</span>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Audio Synthesizer (Web Audio API Engine) & Main Script -->
+  <script src="app.js"></script>
+</body>
+</html>
