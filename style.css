@@ -878,6 +878,8 @@ body {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  justify-content: center;
+  align-items: flex-start;
 }
 
 .condition-badge {
