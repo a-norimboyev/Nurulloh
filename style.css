@@ -183,23 +183,22 @@ body {
   width: 100%;
   max-width: 1360px;
   margin: 0 auto;
-  padding: clamp(14px, 3vw, 24px) clamp(12px, 3vw, 24px) 48px;
+  padding: 14px clamp(10px, 2vw, 20px) 36px;
   display: flex;
   flex-direction: column;
-  gap: clamp(16px, 2.5vw, 24px);
+  gap: 10px;
   min-width: 0;
 }
 
 /* ==========================================================================
-   Header & Top Navigation (100% Fluid Flexbox)
+   Header & Top Navigation (100% Fluid Adaptive Layout)
    ========================================================================== */
 
 .top-nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 14px;
+  gap: 12px;
   width: 100%;
 }
 
@@ -1748,29 +1747,38 @@ body {
   }
 }
 
-/* 2. Tablet Mode (<= 850px) */
+/* 2. Tablet & Mobile Header Layout (<= 850px) */
 @media (max-width: 850px) {
   .top-nav {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 12px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
   }
 
   .nav-left {
-    justify-content: space-between;
-    width: 100%;
-  }
-
-  .nav-center {
-    max-width: 100%;
-    width: 100%;
-    order: 3;
+    grid-column: 1;
+    grid-row: 1;
+    width: auto;
   }
 
   .nav-right {
-    justify-content: flex-start;
+    grid-column: 2;
+    grid-row: 1;
+    justify-content: flex-end;
+    width: auto;
+  }
+
+  .nav-center {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    max-width: 100%;
     width: 100%;
-    order: 2;
+  }
+
+  .quick-ribbon-section {
+    margin-top: 2px;
   }
 
   .matrix-grid-section {
@@ -1782,7 +1790,7 @@ body {
 @media (max-width: 520px) {
   .app-layout {
     padding: 10px 10px 32px;
-    gap: 14px;
+    gap: 8px;
   }
 
   .hide-mobile {
